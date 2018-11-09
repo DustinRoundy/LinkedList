@@ -10,39 +10,32 @@ class LinkedList {
             this._length++
         }
         else {
-            let currentNode = this.head;
-            console.log("Current Node is: " + currentNode.data);
-            console.log("Current Node next is : " + currentNode.next);
-            let temp = null;
-            while(currentNode != null) {
-                if (currentNode.next == null){
-                    console.log("this.head is: " + this.head.data);
-                    console.log("this.head.next is: " + this.head.next);
-                    if(this.head.data >= node.data){
-                        console.log(currentNode.data + ">=" + node.data);
-                        console.log(currentNode.data >= node.data);
-                        temp = this.head;
-                        this.head = node;
-                        node.next = temp;
-                        console.log("New this.head is: " + this.head.data);
-                        console.log("New this.head.next is: " + this.head.next.data);
-                        return;
+            if(node.data < this.head.data) {
+                node.next = this.head;
+                this.head = node;
+            }
+            else {
+                let currentNode = this.head.next;
+                let temp = null;
+                let prev = this.head;
+                let done = false;
+                while(currentNode != null) {
+                    if(node.data > currentNode.data){
+                        prev = currentNode;
+                        currentNode = currentNode.next;
                     }
-                    else{
-                        currentNode.next = node;
+                    else if (node.data < currentNode.data){
+                        prev.next = node;
+                        node.next = currentNode;
                         this._length++;
+                        done = true;
+                    }
+                    else {
                         return;
                     }
                 }
-                else if (currentNode.data <= node.data) {
-                    temp = currentNode;
-                    currentNode = currentNode.next;
-                }
-                else{
-                    temp.next = node;
-                    node.next = currentNode;
-                    this._length++
-                }
+                prev.next = node;
+                this._length++;
             }
         }
     }
@@ -112,4 +105,4 @@ class LinkedListNode {
     }
 }
 
-// module.exports = LinkedList;
+module.exports = LinkedList;
